@@ -8,7 +8,7 @@ import ArrowIcon from '../components/ArrowIcon';
 import { getGlobalData } from '../utils/global-data';
 import SEO from '../components/SEO';
 import IP from '../components/IP';
-import { logToFile } from '../utils/logger';
+
 export default function Index({ posts, globalData }) {
   return (
     <Layout>
