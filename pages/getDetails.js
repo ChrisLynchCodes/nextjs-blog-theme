@@ -7,19 +7,26 @@ import Header from '../components/Header';
 import Layout, { GradientBackground } from '../components/Layout';
 import ArrowIcon from '../components/ArrowIcon';
 import SEO from '../components/SEO';
-import { logToFile } from '../utils/logger';
 
-const getDetails = ({ ipAddress }) => {
+const getDetails = ({ ipAddress, urlPath, httpMethod, queryParameters, statusCode, responseHeaders, cookies, userAgent  }) => {
   return (
     <div>
       
       <Layout>
       <Header name={"Chris"} />
       <main className="w-full">
-      <p className="text-2xl dark:text-white text-center">
-      Welcome to my website!
+      <p className="text-2xl dark:text-black text-center">
+      Welcome
       </p>
-      <p className="text-2xl dark:text-white text-center">{ipAddress}</p>
+      <br/>
+<p className="text-2xl dark:text-green text-center">IP Address: {ipAddress}</p>
+<p className="text-2xl dark:text-white text-center">URL Path: {urlPath}</p>
+<p className="text-2xl dark:text-white text-center">HTTP Method: {httpMethod}</p>
+<p className="text-2xl dark:text-white text-center">Query Parameters: {JSON.stringify(queryParameters)}</p>
+<p className="text-2xl dark:text-white text-center">Status Code: {statusCode}</p>
+<p className="text-2xl dark:text-white text-center">Response Headers: {JSON.stringify(responseHeaders)}</p>
+<p className="text-2xl dark:text-white text-center">Cookies: {JSON.stringify(cookies)}</p>
+<p className="text-2xl dark:text-white text-center">User Agent: {userAgent}</p>
 
       </main>
       <Footer copyrightText={"TBC"} />
@@ -47,34 +54,11 @@ export async function getServerSideProps(context) {
   // Extract additional information
   const cookies = context.req.cookies;
   const userAgent = context.req.headers['user-agent'];
-// Log information
-// Log information to file
-logToFile(`URL Path: ${urlPath}`);
-logToFile(`HTTP Method: ${httpMethod}`);
-
-// // Log query parameters
-logToFile("Query Parameters:");
-Object.entries(queryParameters).forEach(([key, value]) => {
-  logToFile(`  ${key}: ${value}`);
-});
-
-// // Log response information
-logToFile(`Status Code: ${statusCode}`);
-logToFile("Response Headers:");
-Object.entries(responseHeaders).forEach(([key, value]) => {
-  logToFile(`  ${key}: ${value}`);
-});
-
-// // Log additional information
-logToFile(`Cookies: ${JSON.stringify(cookies)}`);
-
-
-
   const ipAddress =
     context.req.headers['x-forwarded-for'] ||
-    context.req.connection.remoteAddress;logToFile(`User-Agent: ${userAgent}`);
- logToFile(`IP: ${ipAddress}`);
-  return { props: { ipAddress } };
+    context.req.connection.remoteAddress;
+
+  return { props: { ipAddress, urlPath, httpMethod, queryParameters, statusCode, responseHeaders, cookies, userAgent } };
   
 }
 
