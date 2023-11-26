@@ -8,7 +8,7 @@ import ArrowIcon from '../components/ArrowIcon';
 import { getGlobalData } from '../utils/global-data';
 import SEO from '../components/SEO';
 import IP from '../components/IP';
-
+import { logToFile } from '../utils/logger';
 export default function Index({ posts, globalData }) {
   return (
     <Layout>
@@ -16,8 +16,8 @@ export default function Index({ posts, globalData }) {
       <Header name={globalData.name} />
       <main className="w-full">
       <p className="text-2xl dark:text-white text-center">
-        <Link href="/getip">
-          <a>IP</a>
+        <Link href="/getDetails">
+          <a>DETAILS</a>
         </Link>
       </p>
       </main>
