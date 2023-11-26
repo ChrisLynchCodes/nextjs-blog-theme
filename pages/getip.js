@@ -1,27 +1,27 @@
-import Link from 'next/link';
-import { getPosts } from '../utils/mdx-utils';
+// pages/index.js
+import React from 'react';
 
+import Link from 'next/link';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Layout, { GradientBackground } from '../components/Layout';
 import ArrowIcon from '../components/ArrowIcon';
-import { getGlobalData } from '../utils/global-data';
 import SEO from '../components/SEO';
-import IP from '../components/IP';
 
-export default function Index({ posts, globalData }) {
+const GetIp = ({ ipAddress }) => {
   return (
-    <Layout>
-      <SEO title={globalData.name} description={globalData.blogTitle} />
-      <Header name={globalData.name} />
+    <div>
+      
+      <Layout>
+      <Header name={"Chris"} />
       <main className="w-full">
       <p className="text-2xl dark:text-white text-center">
-        <Link href="/getip">
-          <a>IP</a>
-        </Link>
+      Welcome to my website!
       </p>
+      <p className="text-2xl dark:text-white text-center">{ipAddress}</p>
+
       </main>
-      <Footer copyrightText={globalData.footerText} />
+      <Footer copyrightText={"TBC"} />
       <GradientBackground
         variant="large"
         className="fixed top-20 opacity-40 dark:opacity-60"
@@ -31,12 +31,17 @@ export default function Index({ posts, globalData }) {
         className="absolute bottom-0 opacity-20 dark:opacity-10"
       />
     </Layout>
+    </div>
   );
+};
+
+export async function getServerSideProps(context) {
+  // Get the visitor's IP address from the request object
+  const ipAddress =
+    context.req.headers['x-forwarded-for'] ||
+    context.req.connection.remoteAddress;
+
+  return { props: { ipAddress } };
 }
 
-export function getStaticProps() {
-  const posts = getPosts();
-  const globalData = getGlobalData();
-
-  return { props: { posts, globalData } };
-}
+export default GetIp;
